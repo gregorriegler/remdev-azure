@@ -18,7 +18,8 @@ write_files:
   permissions: '0775'
 
 runcmd:
-  - vncserver -geometry 1920x1080
+  - runuser -u gregor -- printf "gregor\ngregor\n\n" | vncpasswd
+  - runuser -u gregor -- vncserver
 # TODO
 # intellij
 # git
