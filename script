@@ -1,0 +1,74 @@
+# Tutorial
+#   https://docs.microsoft.com/en-us/azure/virtual-machines/linux/tutorial-automate-vm-deployment
+# Ubuntu 20.04: Canonical:0001-com-ubuntu-server-focal:20_04-lts:latest
+# Debian 10: Debian
+# 4 cpu, 16gb ram: Standard_D4s_v3
+# TODO how to make it pay per use ?
+
+# Which images are available?
+az vm image list
+
+
+# Delete Resource Group if exists
+az group delete --name mob
+
+# Create Resource Group
+az group create --name mob --location germanywestcentral
+
+# Create VM
+az vm create \
+--resource-group mob \
+--name mobVm \
+--size Standard_D4s_v3 \
+--image Canonical:0001-com-ubuntu-server-focal:20_04-lts:latest \
+--admin-username gregor \
+--admin-password gregor \
+--generate-ssh-keys \
+--custom-data cloud-init.yml
+
+# Open Port for VM
+az vm open-port --port 80 --resource-group mob --name mobVm
+az vm open-port --port 443 --resource-group mob --name mobVm --priority 1100
+# rdp
+az vm open-port --port 3389 --resource-group mob --name mobVm --priority 1200
+# anydesk
+az vm open-port --port 6568 --resource-group mob --name mobVm --priority 1300
+az vm open-port --port 7070 --resource-group mob --name mobVm --priority 1400
+
+# Reset the Password
+az vm user update \
+  --resource-group mob \
+  --name mobVm \
+  --username gregor \
+  --password gregor
+
+# Install xrdp
+# https://gist.github.com/jelovac/6ed31e0901ccdcdeeb582277076bf966
+sudo apt install xrdp
+
+sudo adduser xrdp ssl-cert
+
+echo "mate-session" > ~/.xsession
+# chmod +x .xsession ???
+
+# Install Anydesk
+# worked only after 
+# 1. manually install xfce4 with lightdm (was interactive)
+# 2. start lightdm
+# 3. manually install anydesk
+wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo apt-key add -
+echo "deb http://deb.anydesk.com/ all main" | sudo tee /etc/apt/sources.list.d/anydesk-stable.list
+sudo apt update
+sudo apt install anydesk
+
+# start it
+# optionally: sudo killall anydesk
+# sudo systemctl start anydesk
+
+# set a password
+echo gregor1234 | sudo anydesk --set-password
+
+# anydesk from cli https://support.anydesk.com/Command_Line_Interface
+# find out id
+sudo anydesk --get-id 
+

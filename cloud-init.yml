@@ -1,0 +1,15 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+packages:
+  - xfce4
+  - tigervnc-standalone-server
+
+
+# todo
+# vim
+# intellij
+# git
+# lg
+#
