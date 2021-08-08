@@ -42,14 +42,25 @@ az vm user update \
   --username gregor \
   --password gregor
 
-# Install xrdp
-# https://gist.github.com/jelovac/6ed31e0901ccdcdeeb582277076bf966
-sudo apt install xrdp
+# Setup VNC Server (tigervnc-standalone-server installed) 
+# set password as in https://linuxize.com/post/how-to-install-and-configure-vnc-on-ubuntu-20-04/
 
-sudo adduser xrdp ssl-cert
+vncpasswd
 
-echo "mate-session" > ~/.xsession
-# chmod +x .xsession ???
+vim ~/.vnc/xstartup
+#!/bin/sh
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+exec startxfce4
+#end xstartup
+chmod u+x ~/.vnc/xstartup
+#start vncserver
+vncserver -geometry 1920x1080
+
+# Connect to VNC
+sudo apt install tigervnc-viewer
+ssh -L 5901:127.0.0.1:5901 -N -f -l <username> <ip address>
+xtigervncviewer -DesktopSize=1920x1080 -RemoteResize=0 :1
 
 # Install Anydesk
 # worked only after 

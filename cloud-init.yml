@@ -4,11 +4,22 @@ package_upgrade: true
 package_reboot_if_required: true
 packages:
   - xfce4
+  - xfce4-goodies
   - tigervnc-standalone-server
 
+write_files:
+  content: |
+      #!/bin/sh
+      unset SESSION_MANAGER
+      unset DBUS_SESSION_BUS_ADDRESS
+      exec startxfce4
+  path: /home/gregor/.vnc/xstartup 
+  owner: gregor:gregor
+  permissions: '0775'
 
-# todo
-# vim
+runcmd:
+  - vncserver -geometry 1920x1080
+# TODO
 # intellij
 # git
 # lg
