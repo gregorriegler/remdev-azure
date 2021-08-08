@@ -8,18 +8,18 @@ packages:
   - tigervnc-standalone-server
 
 write_files:
-  content: |
+  - content: |
       #!/bin/sh
       unset SESSION_MANAGER
       unset DBUS_SESSION_BUS_ADDRESS
       exec startxfce4
-  path: /home/gregor/.vnc/xstartup 
-  owner: gregor:gregor
-  permissions: '0775'
+    path: /home/gregor/.vnc/xstartup 
+    owner: gregor:gregor
+    permissions: '0775'
 
 runcmd:
-  - runuser -u gregor -- printf "gregor\ngregor\n\n" | vncpasswd
-  - runuser -u gregor -- vncserver
+  - chown -R gregor:gregor /home/gregor
+  - runuser -l gregor -c 'printf "gregor\ngregor\n\n" | vncserver'
 # TODO
 # intellij
 # git
