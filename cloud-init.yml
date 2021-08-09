@@ -6,6 +6,10 @@ packages:
   - xubuntu-core
   - tigervnc-standalone-server
   - anydesk
+  - x2goserver
+  - x2goserver-xsession
+  - x2goserver-desktopsharing
+  - firefox
 
 write_files:
   - content: |
@@ -17,7 +21,6 @@ write_files:
     permissions: '0775'
 
 runcmd:
-  - service anydesk stop  
   - runuser -l gregor -c 'mkdir /home/gregor/.vnc'
   - cp /opt/xstart /home/gregor/.vnc/xstart
   - chown gregor:gregor /home/gregor/.vnc/xstart
