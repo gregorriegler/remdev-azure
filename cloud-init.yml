@@ -3,17 +3,16 @@ package_update: true
 package_upgrade: true
 package_reboot_if_required: true
 packages:
-  - xfce4
+  - xubuntu-core
   - tigervnc-standalone-server
   - anydesk
 
 write_files:
   - content: |
       #!/bin/sh
-      exec /etc/vnc/xstartup
-      xrdb $HOME/.Xresources
-      vncconfig -iconic &
-      dbus-launch --exit-with-session gnome-session &
+      unset SESSION_MANAGER
+      unset DBUS_SESSION_BUS_ADDRESS
+      exec startxfce4
     path: /opt/xstart
     permissions: '0775'
 
