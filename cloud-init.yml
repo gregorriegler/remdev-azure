@@ -1,26 +1,85 @@
 #cloud-config
+
 package_update: true
 package_upgrade: true
 package_reboot_if_required: true
 packages:
   - xubuntu-core
+  - software-properties-common
   - x2goserver
   - x2goserver-xsession
   - x2goserver-desktopsharing
   - firefox
   - flatpak
+  - git
+  - lazygit
+  - docker.io
+  - python
+  - python3.8
+  - python3-pip
+  - meld
+  - curl
     
-#snap:
-#  commands:
-#    - ['install', 'intellij-idea-ultimate']
+snap:
+  commands:
+    - ['install', '--classic', '--edge', 'intellij-idea-ultimate']
+    - ['install', '--classic', 'code']
 
 runcmd:
   - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
   - flatpak install -y flathub com.anydesk.Anydesk
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - dpkg -i google-chrome-stable_current_amd64.deb
+  - apt remove -y xfce4-screensaver
+  - apt remove -y xfce4-power-manager
+  - runuser -l gregor -c 'curl -s "https://get.sdkman.io" | bash'
+  - runuser -l gregor -c 'source "$HOME/.sdkman/bin/sdkman-init.sh" ; sdk install java ; sdk install gradle ; sdk install maven'
+  - runuser -l gregor -c 'curl -s https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash'
+  - runuser -l gregor -c 'source ~/.profile ; nvm install node ; npm install --global yarn'
+  - usermod -aG docker gregor
+  - chmod 666 /var/run/docker.sock
+  - runuser -l gregor -c '/usr/bin/xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"'
     
+apt:
+  sources:
+    lazygit.list:
+      source: "ppa:lazygit-team/release"
+    deadsnakes.list:
+      source: "ppa:deadsnakes/ppa"
 
 # TODO
-# intellij
-# git
-# lg
 #
+# intellij k
+# Xscreensaver k
+# vscode k
+# git k
+# lg k
+# sdkman o
+# jdk k
+# maven k
+# gradle k
+# nvm k
+# node+npm o
+# yarn o
+# zsh + plugins
+# melddiff k
+# github-cli
+# mob-timer
+# google-chrome-stable k
+# vpn ?
+# anydesk password ?
+# power management off k
+# docker k
+# python k
+# pip k
+# beyond compare kann 3way-diffs
+# mobster
+# dark terminal
+# dark layout k 
+#
+# Tips:
+# Anydesk:
+# Show remote Cursor
+# Give up Mouse+Keyboard Control
+# Jetbrains Toolbox
+# Hetzner
