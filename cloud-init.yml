@@ -19,12 +19,25 @@ packages:
   - python3-pip
   - meld
   - curl
+  - gconf2
     
 snap:
   commands:
     - ['install', '--classic', '--edge', 'intellij-idea-ultimate']
     - ['install', '--classic', 'code']
 
+write_files:
+  - content: |
+      [Desktop Entry]
+      Version=1.0
+      Name=Mob Timer
+      Exec=/home/gregor/mob-timer-linux-x64/mob-timer
+      Icon=/home/gregor/mob-timer-linux-x64/resources/app/icon.ico
+      Terminal=false
+      Type=Application
+      Categories=Application;Development
+    path: /usr/share/applications/mob-timer.desktop
+      
 runcmd:
   - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
   - flatpak install -y flathub com.anydesk.Anydesk
@@ -34,11 +47,12 @@ runcmd:
   - apt remove -y xfce4-power-manager
   - runuser -l gregor -c 'curl -s "https://get.sdkman.io" | bash'
   - runuser -l gregor -c 'source "$HOME/.sdkman/bin/sdkman-init.sh" ; sdk install java ; sdk install gradle ; sdk install maven'
-  - runuser -l gregor -c 'curl -s https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash'
-  - runuser -l gregor -c 'source ~/.profile ; nvm install node ; npm install --global yarn'
+  - runuser -l gregor -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash'
+  - runuser -l gregor -c 'bash -ic "nvm install node ; npm install --global yarn"'
   - usermod -aG docker gregor
   - chmod 666 /var/run/docker.sock
   - runuser -l gregor -c '/usr/bin/xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"'
+  - runuser -l gregor -c 'wget "https://github.com/gregorriegler/mob-timer/releases/download/linux/mob-timer-linux-x64.zip" -O temp.zip ; unzip temp.zip ; rm temp.zip'
     
 apt:
   sources:
@@ -47,24 +61,22 @@ apt:
     deadsnakes.list:
       source: "ppa:deadsnakes/ppa"
 
-# TODO
-#
 # intellij k
 # Xscreensaver k
 # vscode k
 # git k
 # lg k
-# sdkman o
+# sdkman k
 # jdk k
 # maven k
 # gradle k
 # nvm k
-# node+npm o
-# yarn o
+# node+npm k
+# yarn k
 # zsh + plugins
 # melddiff k
 # github-cli
-# mob-timer
+# mob-timer k
 # google-chrome-stable k
 # vpn ?
 # anydesk password ?
@@ -72,14 +84,10 @@ apt:
 # docker k
 # python k
 # pip k
-# beyond compare kann 3way-diffs
-# mobster
-# dark terminal
 # dark layout k 
 #
 # Tips:
 # Anydesk:
 # Show remote Cursor
 # Give up Mouse+Keyboard Control
-# Jetbrains Toolbox
 # Hetzner
