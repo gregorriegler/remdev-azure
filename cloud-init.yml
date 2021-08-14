@@ -19,6 +19,7 @@ packages:
   - python3-pip
   - meld
   - curl
+  - gconf2
     
 snap:
   commands:
