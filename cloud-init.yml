@@ -105,7 +105,7 @@ runcmd:
   - runuser -l gregor -c 'bash -ic "nvm install node ; npm install --global yarn"'
   - runuser -l gregor -c '/usr/bin/xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"'
   - runuser -l gregor -c 'wget "https://github.com/gregorriegler/mob-timer/releases/download/linux/mob-timer-linux-x64.zip" -O temp.zip ; unzip temp.zip ; rm temp.zip'
-  - runuser -l gregor -c 'echo -e "[Desktop Entry]\nType=Application\nExec=/opt/init-xfce4-panel.sh\nName=Init xfce4 Panel\nComment=Init xfce4 Panel" | tee > ~/.config/autostart/init-xfce4-panel.desktop'
+  - runuser -l gregor -c 'mkdir ~/.config/autostart ; echo -e "[Desktop Entry]\nType=Application\nExec=/opt/init-xfce4-panel.sh\nName=Init xfce4 Panel\nComment=Init xfce4 Panel" | tee > ~/.config/autostart/init-xfce4-panel.desktop'
     
 apt:
   sources:
