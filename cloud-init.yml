@@ -26,6 +26,7 @@ snap:
   commands:
     - ['install', '--classic', '--edge', 'intellij-idea-ultimate']
     - ['install', '--classic', 'code']
+    - ['install', 'typora']
 
 write_files:
   - content: |
@@ -62,6 +63,7 @@ write_files:
       create_launcher_plugin "/var/lib/snapd/desktop/applications/intellij-idea-ultimate_intellij-idea-ultimate.desktop"
       create_launcher_plugin "/var/lib/snapd/desktop/applications/code_code.desktop"
       create_launcher_plugin "/usr/share/applications/vim.desktop"
+      create_launcher_plugin "/var/lib/snapd/desktop/applications/typora_typora.desktop"
       create_launcher_plugin "/usr/share/applications/org.gnome.meld.desktop"
       create_launcher_plugin "/usr/share/applications/mob-timer.desktop"
       create_launcher_plugin "/var/lib/flatpak/exports/share/applications/com.anydesk.Anydesk.desktop"
@@ -149,6 +151,7 @@ apt:
 # zsh + plugins
 # vpn ?
 # anydesk password ?
+# typora o
 #
 # Ping when done (end of cloud-init)
 #
