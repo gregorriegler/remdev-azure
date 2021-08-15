@@ -33,4 +33,4 @@ az vm user update \
 
 echo "vm created."
 echo "connect via ssh:"
-echo "ssh mob@${ip}"
+echo "ssh ${USERNAME}@${ip}"
