@@ -1,7 +1,10 @@
 #!/bin/bash 
 
 REGION='germanywestcentral'
-SIZE='Standard_D4s_v3' # Alternative: 'Standard_D8s_v4' // General Purpose vCPUs:8 (Intel® Xeon® Platinum 8272CL) memory: 32GiB
+# Alternative: 'Standard_D8s_v4' // General Purpose vCPUs:8 (Intel® Xeon® Platinum 8272CL) memory: 32GiB
+# Standard_D4d_v4
+# Standard_D4s_v3
+SIZE='Standard_D4d_v3'
 USERNAME='mob'
 PASSWORD=${1:-mob}
 
