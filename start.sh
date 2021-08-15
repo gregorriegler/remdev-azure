@@ -37,7 +37,7 @@ az vm user update \
   --resource-group mob \
   --name mobVm \
   --username $USERNAME \
-  --password $PASSWORD
+  --password $PASSWORD > /dev/null
 
 echo "vm created."
 echo "connect via ssh:"
