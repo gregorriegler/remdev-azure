@@ -93,8 +93,13 @@ write_files:
       ## Clear Shortcuts needed by IntelliJ
       xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -r -R
       xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Delete' -r -R
+      setxkbmap -option caps:escape
 
     path: /opt/init-xfce4-panel.sh
+    permissions: '0755'
+  - content: |
+      require('http').createServer(function (req, res) { res.end('UP'); }).listen(3000); 
+    path: /opt/up.js
     permissions: '0755'
 
 runcmd:
@@ -116,6 +121,8 @@ runcmd:
   - runuser -l mob -c 'mkdir ~/.config/autostart'
   - runuser -l mob -c 'echo -e "[Desktop Entry]\nType=Application\nExec=/opt/init-xfce4-panel.sh\nName=Init xfce4 Panel\nComment=Init xfce4 Panel" | tee > ~/.config/autostart/init-xfce4-panel.desktop'
   - printf "<!DOCTYPE NXKeystroke>\n<keystrokes></keystrokes>\n" > /etc/x2go/keystrokes.cfg   
+  - runuser -l mob -c 'bash -ic "node /opt/up.js &"'
+
 apt:
   sources:
     lazygit.list:

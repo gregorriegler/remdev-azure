@@ -23,7 +23,12 @@ ip=$(az vm create \
 --custom-data cloud-init.yml | jq -r .publicIpAddress)
 
 echo "opening ports ..."
-az vm open-port --port 80,443,6568,7070,5938 --resource-group mob --name mobVm --priority 1050
+az vm open-port --port 80   --resource-group mob --name mobVm --priority 1050 > /dev/null
+az vm open-port --port 443  --resource-group mob --name mobVm --priority 1060 > /dev/null
+az vm open-port --port 3000 --resource-group mob --name mobVm --priority 1070 > /dev/null
+az vm open-port --port 5938 --resource-group mob --name mobVm --priority 1080 > /dev/null
+az vm open-port --port 6568 --resource-group mob --name mobVm --priority 1090 > /dev/null
+az vm open-port --port 7070 --resource-group mob --name mobVm --priority 1100 > /dev/null
 
 az vm user update \
   --resource-group mob \
@@ -34,3 +39,13 @@ az vm user update \
 echo "vm created."
 echo "connect via ssh:"
 echo "ssh ${USERNAME}@${ip}"
+
+# wait for cloud-init to be finished
+echo "please wait before connecting via X2Go."
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' -m 2 $ip:3000)" != "200" ]]; do 
+    sleep 2;
+    echo -ne "."
+done
+
+echo " done."
+echo "${ip} ready to connect via X2Go."
