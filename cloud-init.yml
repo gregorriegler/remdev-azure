@@ -27,6 +27,7 @@ snap:
     - ['install', '--classic', '--edge', 'intellij-idea-ultimate']
     - ['install', '--classic', 'code']
     - ['install', 'typora']
+    - ['install', 'postman']
 
 write_files:
   - content: |
@@ -153,16 +154,16 @@ apt:
 # dark terminal k 
 # dark layout k 
 # 30 min no freeze test k
-# caps -> escape
+# caps -> escape k
+# typora k
+# postman o
 # github-cli
-# zsh + plugins
-# vpn ?
 # anydesk password ?
-# typora o
+# zsh + plugins
 # Ping when done (end of cloud-init) k
-# postman
 # automatically destroy after 4 inactive hours
 #
+# vpn ?
 #
 # Tips:
 # Anydesk:
