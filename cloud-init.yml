@@ -25,6 +25,7 @@ packages:
 snap:
   commands:
     - ['install', '--classic', '--edge', 'intellij-idea-ultimate']
+    - ['install', '--classic', 'pycharm-professional']
     - ['install', '--classic', 'code']
     - ['install', 'typora']
     - ['install', 'postman']
@@ -157,6 +158,7 @@ apt:
 # caps -> escape k
 # typora k
 # postman o
+# pycharm o
 # github-cli
 # anydesk password ?
 # zsh + plugins
