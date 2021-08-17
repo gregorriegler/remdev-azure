@@ -159,9 +159,10 @@ apt:
 # vpn ?
 # anydesk password ?
 # typora o
+# Ping when done (end of cloud-init) k
 # postman
+# automatically destroy after 4 inactive hours
 #
-# Ping when done (end of cloud-init)
 #
 # Tips:
 # Anydesk:
