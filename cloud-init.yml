@@ -63,10 +63,12 @@ write_files:
       create_launcher_plugin "/usr/share/applications/firefox.desktop"
       create_launcher_plugin "/usr/share/applications/google-chrome.desktop"
       create_launcher_plugin "/var/lib/snapd/desktop/applications/intellij-idea-ultimate_intellij-idea-ultimate.desktop"
+      create_launcher_plugin "/var/lib/snapd/desktop/applications/pycharm-professional_pycharm-professional.desktop"
       create_launcher_plugin "/var/lib/snapd/desktop/applications/code_code.desktop"
       create_launcher_plugin "/usr/share/applications/vim.desktop"
       create_launcher_plugin "/var/lib/snapd/desktop/applications/typora_typora.desktop"
       create_launcher_plugin "/usr/share/applications/org.gnome.meld.desktop"
+      create_launcher_plugin "/var/lib/snapd/desktop/applications/postman_postman.desktop"
       create_launcher_plugin "/usr/share/applications/mob-timer.desktop"
       create_launcher_plugin "/var/lib/flatpak/exports/share/applications/com.anydesk.Anydesk.desktop"
       
@@ -157,8 +159,8 @@ apt:
 # 30 min no freeze test k
 # caps -> escape k
 # typora k
-# postman o
-# pycharm o
+# postman k
+# pycharm k
 # github-cli
 # anydesk password ?
 # zsh + plugins
