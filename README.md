@@ -46,6 +46,7 @@ Based on Ubuntu Server 20.04 LTS
 - Python 2
 - Python 3.8
 - pip
+- PyCharm
 
 ### Java
 
