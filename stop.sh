@@ -1,3 +1,5 @@
 #!/bin/bash 
-echo "deleting group mob..."
-az group delete --name mob
+GROUPNAME=${1:-mob}
+
+echo "Deleting group $GROUPNAME..."
+az group delete --name $GROUPNAME
