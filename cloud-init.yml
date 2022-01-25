@@ -168,6 +168,7 @@ apt:
 # automatically destroy after 4 inactive hours
 # C#:
 # dotNetCore 6
+# sudo snap install dotnet-sdk --classic --channel=6.0
 # vsCode omniCSharp
 #
 #
