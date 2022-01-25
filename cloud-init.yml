@@ -167,7 +167,7 @@ apt:
 # Ping when done (end of cloud-init) k
 # automatically destroy after 4 inactive hours
 # C#:
-# dotNetCore 6
+# dotNet 6
 # sudo snap install dotnet-sdk --classic --channel=6.0
 # vsCode omniCSharp
 #
