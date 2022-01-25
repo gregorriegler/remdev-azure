@@ -166,8 +166,10 @@ apt:
 # zsh + plugins
 # Ping when done (end of cloud-init) k
 # automatically destroy after 4 inactive hours
+# C#:
+# dotNetCore 6
+# vsCode omniCSharp
 #
-# vpn ?
 #
 # Tips:
 # Anydesk:
