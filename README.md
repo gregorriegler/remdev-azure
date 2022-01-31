@@ -51,7 +51,7 @@ Based on Ubuntu Server 20.04 LTS
 ### Java
 
 - sdkman
-- AdoptOpenJDK 11 (sdkman default)
+- AdoptOpenJDK 17
 - Maven
 - Gradle
 

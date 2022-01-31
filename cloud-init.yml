@@ -117,7 +117,7 @@ runcmd:
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - dpkg -i google-chrome-stable_current_amd64.deb
   - runuser -l mob -c 'curl -s "https://get.sdkman.io" | bash'
-  - runuser -l mob -c 'source "$HOME/.sdkman/bin/sdkman-init.sh" ; sdk install java ; sdk install gradle ; sdk install maven'
+  - runuser -l mob -c 'source "$HOME/.sdkman/bin/sdkman-init.sh" ; sdk install java 17.0.2-tem ; sdk install gradle ; sdk install maven'
   - runuser -l mob -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash'
   - runuser -l mob -c 'bash -ic "nvm install node ; npm install --global yarn"'
   - runuser -l mob -c '/usr/bin/xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"'
