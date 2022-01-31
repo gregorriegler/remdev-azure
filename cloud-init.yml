@@ -24,7 +24,7 @@ packages:
     
 snap:
   commands:
-    - ['install', '--classic', '--edge', 'intellij-idea-ultimate']
+    - ['install', '--classic', '--channel=2021.1/stable', 'intellij-idea-ultimate']
     - ['install', '--classic', 'pycharm-professional']
     - ['install', '--classic', 'code']
     - ['install', 'typora']
@@ -41,6 +41,16 @@ write_files:
       Type=Application
       Categories=Application;Development
     path: /usr/share/applications/mob-timer.desktop
+
+  - content: |
+      #!/bin/bash
+      curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg
+      echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+      sudo apt update
+      sudo apt install gh
+    path: /opt/install-gh-cli.sh
+    permissions: '0755'
+
   - content: |
       #!/bin/bash
       
@@ -126,6 +136,8 @@ runcmd:
   - runuser -l mob -c 'echo -e "[Desktop Entry]\nType=Application\nExec=/opt/init-xfce4-panel.sh\nName=Init xfce4 Panel\nComment=Init xfce4 Panel" | tee > ~/.config/autostart/init-xfce4-panel.desktop'
   - printf "<!DOCTYPE NXKeystroke>\n<keystrokes></keystrokes>\n" > /etc/x2go/keystrokes.cfg   
   - runuser -l mob -c 'bash -ic "node /opt/up.js &"'
+  - runuser -l mob -c 'bash -ic "git clone https://github.com/swkBerlin/kata-bootstraps ~/kata-bootstraps"'
+  - /opt/install-gh-cli.sh
 
 apt:
   sources:
@@ -135,32 +147,6 @@ apt:
       source: "ppa:deadsnakes/ppa"
 
 # TODO
-# intellij k
-# Xscreensaver k
-# vscode k
-# git k
-# lg k
-# sdkman k
-# jdk k
-# maven k
-# gradle k
-# nvm k
-# node+npm k
-# yarn k
-# melddiff k
-# mob-timer k
-# google-chrome-stable k
-# power management off k
-# docker k
-# python k
-# pip k
-# dark terminal k 
-# dark layout k 
-# 30 min no freeze test k
-# caps -> escape k
-# typora k
-# postman k
-# pycharm k
 # github-cli
 # anydesk password ?
 # zsh + plugins
