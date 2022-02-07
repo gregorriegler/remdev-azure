@@ -21,10 +21,12 @@ packages:
   - meld
   - curl
   - gconf2
+  - apt-transport-https
     
 snap:
   commands:
     - ['install', '--classic', '--channel=2021.1/stable', 'intellij-idea-ultimate']
+    - ['install', '--classic', '--channel=2021.1/stable', 'rider']
     - ['install', '--classic', 'pycharm-professional']
     - ['install', '--classic', 'code']
     - ['install', 'typora']
@@ -57,7 +59,8 @@ write_files:
         curl https://gist.githubusercontent.com/gregorriegler/5c578410a619188838d3c9c6c23e09ae/raw/66f53f19c5112e78e298ffe3cc49d3c5b0655738/tdd-bootstrap-ts-mocha-chai.sh | bash -s "$1"
       }
       tdd_js() {
-        curl https://gist.githubusercontent.com/gregorriegler/3e6f5d38f74fec9f2be0c66ddf16195d/raw/d36216c683a47f72db5d4e7c8333a68066b3af60/tdd-bootstrap-js-mocha-chai.sh | bash -s "$1"}
+        curl https://gist.githubusercontent.com/gregorriegler/3e6f5d38f74fec9f2be0c66ddf16195d/raw/d36216c683a47f72db5d4e7c8333a68066b3af60/tdd-bootstrap-js-mocha-chai.sh | bash -s "$1"
+      }
     path: /opt/.bash_aliases
     permissions: '0755'
 
@@ -84,6 +87,7 @@ write_files:
       create_launcher_plugin "/usr/share/applications/google-chrome.desktop"
       create_launcher_plugin "/var/lib/snapd/desktop/applications/intellij-idea-ultimate_intellij-idea-ultimate.desktop"
       create_launcher_plugin "/var/lib/snapd/desktop/applications/pycharm-professional_pycharm-professional.desktop"
+      create_launcher_plugin "/var/lib/snapd/desktop/applications/rider_rider.desktop"
       create_launcher_plugin "/var/lib/snapd/desktop/applications/code_code.desktop"
       create_launcher_plugin "/usr/share/applications/vim.desktop"
       create_launcher_plugin "/var/lib/snapd/desktop/applications/typora_typora.desktop"
@@ -128,6 +132,11 @@ write_files:
     permissions: '0755'
 
 runcmd:
+  - [wget, "https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb", -O, /root/packages-microsoft-prod.deb]
+  - dpkg -i /root/packages-microsoft-prod.deb
+  - rm /root/packages-microsoft-prod.deb
+  - apt update
+  - apt-get install dotnet-sdk-6.0 -y
   - usermod -aG docker mob
   - chmod 666 /var/run/docker.sock
   - apt remove -y xfce4-screensaver
@@ -163,11 +172,6 @@ apt:
 # anydesk password ?
 # zsh + plugins
 # automatically destroy after 4 inactive hours
-# C#:
-# jetbrains rider
-# dotNet 6
-# sudo snap install dotnet-sdk --classic --channel=6.0
-# vsCode omniCSharp
 #
 #
 # Tips:
