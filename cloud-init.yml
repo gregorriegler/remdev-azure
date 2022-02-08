@@ -131,6 +131,35 @@ write_files:
     path: /opt/up.js
     permissions: '0755'
 
+  - content: |
+      #!/bin/bash
+
+      # sdkman & java 
+      curl -s "https://get.sdkman.io" | bash
+      source "$HOME/.sdkman/bin/sdkman-init.sh" ; sdk install java 17.0.2-tem ; sdk install gradle ; sdk install maven
+
+      # nvm & node
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+      bash -ic "nvm install node ; npm install --global yarn"
+      
+      # desktop theme
+      /usr/bin/xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
+
+      # install mob-timer
+      wget "https://github.com/gregorriegler/mob-timer/releases/download/linux/mob-timer-linux-x64.zip" -O temp.zip ; unzip temp.zip ; rm temp.zip
+
+      # Panel Shortcuts
+      mkdir ~/.config/autostart
+      echo -e "[Desktop Entry]\nType=Application\nExec=/opt/init-xfce4-panel.sh\nName=Init xfce4 Panel\nComment=Init xfce4 Panel" | tee > ~/.config/autostart/init-xfce4-panel.desktop
+
+      # Dot files
+      cp /opt/.bash_aliases ~/.bash_aliases
+
+      # Kata Bootstraps
+      git clone https://github.com/swkBerlin/kata-bootstraps ~/kata-bootstraps
+    path: /opt/user-scripts.sh
+    permissions: '0755'
+
 runcmd:
   - [wget, "https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb", -O, /root/packages-microsoft-prod.deb]
   - dpkg -i /root/packages-microsoft-prod.deb
@@ -148,17 +177,8 @@ runcmd:
   - dpkg -i google-chrome-stable_current_amd64.deb
   - /opt/install-gh-cli.sh
   - printf "<!DOCTYPE NXKeystroke>\n<keystrokes></keystrokes>\n" > /etc/x2go/keystrokes.cfg
-  - runuser -l mob -c 'curl -s "https://get.sdkman.io" | bash'
-  - runuser -l mob -c 'source "$HOME/.sdkman/bin/sdkman-init.sh" ; sdk install java 17.0.2-tem ; sdk install gradle ; sdk install maven'
-  - runuser -l mob -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash'
-  - runuser -l mob -c 'bash -ic "nvm install node ; npm install --global yarn"'
-  - runuser -l mob -c '/usr/bin/xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"'
-  - runuser -l mob -c 'wget "https://github.com/gregorriegler/mob-timer/releases/download/linux/mob-timer-linux-x64.zip" -O temp.zip ; unzip temp.zip ; rm temp.zip'
-  - runuser -l mob -c 'mkdir ~/.config/autostart'
-  - runuser -l mob -c 'echo -e "[Desktop Entry]\nType=Application\nExec=/opt/init-xfce4-panel.sh\nName=Init xfce4 Panel\nComment=Init xfce4 Panel" | tee > ~/.config/autostart/init-xfce4-panel.desktop'
+  - runuser -l mob -c 'bash -ic "/opt/user-scripts.sh"'
   - runuser -l mob -c 'bash -ic "node /opt/up.js &"'
-  - runuser -l mob -c 'bash -ic "git clone https://github.com/swkBerlin/kata-bootstraps ~/kata-bootstraps"'
-  - runuser -l mob -c 'bash -ic "cp /opt/.bash_aliases ~/.bash_aliases"'
 
 apt:
   sources:
