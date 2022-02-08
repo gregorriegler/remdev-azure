@@ -27,7 +27,7 @@ snap:
   commands:
     - ['install', '--classic', '--channel=2021.1/stable', 'intellij-idea-ultimate']
     - ['install', '--classic', '--channel=2021.1/stable', 'rider']
-    - ['install', '--classic', 'pycharm-professional']
+    - ['install', '--classic', '--channel=2021.1/stable', 'pycharm-professional']
     - ['install', '--classic', 'code']
     - ['install', 'typora']
     - ['install', 'postman']
