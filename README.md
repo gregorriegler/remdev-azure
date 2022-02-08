@@ -55,6 +55,10 @@ Based on Ubuntu Server 20.04 LTS
 - Maven
 - Gradle
 
+### CSharp
+
+ - dotnet 6
+
 ### JavaScript
 
 - nvm
@@ -66,6 +70,7 @@ Based on Ubuntu Server 20.04 LTS
 - git
 - lazygit
 - IntelliJ Ultimate
+- Rider
 - VS Code
 - Vim
 - Typora
