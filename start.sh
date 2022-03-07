@@ -20,7 +20,7 @@ do
 done
 
 echo "deleting group $GROUPNAME ..."
-az group delete --name $GROUPNAME
+az group delete --name $GROUPNAME -y
 
 echo "recreating group $GROUPNAME ..."
 az group create --name $GROUPNAME --location $REGION

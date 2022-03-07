@@ -121,7 +121,11 @@ write_files:
       ## Clear Shortcuts needed by IntelliJ
       xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -r -R
       xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Delete' -r -R
+      xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>l' -r -R
       setxkbmap -option caps:escape
+
+      ## start X2Go Desktop Sharing
+      /usr/bin/x2godesktopsharing
 
     path: /opt/init-xfce4-panel.sh
     permissions: '0755'
@@ -157,6 +161,13 @@ write_files:
 
       # Kata Bootstraps
       git clone https://github.com/swkBerlin/kata-bootstraps ~/kata-bootstraps
+
+      # Bookshelf Kata
+      git clone -b no-spoilers https://github.com/gregorriegler/Bookshelf-Kata.git ~/bookshelf-kata
+      
+      # Kata Bootstraps
+      git clone https://github.com/emilybache/GildedRose-Refactoring-Kata.git ~/gilded-rose-refactoring-kata
+
     path: /opt/user-scripts.sh
     permissions: '0755'
 
@@ -171,6 +182,8 @@ runcmd:
   - apt remove -y xfce4-screensaver
   - apt remove -y xfce4-power-manager
   - apt remove -y light-locker
+  - sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+  - systemctl restart sshd
   - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
   - flatpak install -y flathub com.anydesk.Anydesk
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
