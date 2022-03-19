@@ -176,6 +176,12 @@ write_files:
       # Kata Bootstraps
       git clone https://github.com/emilybache/GildedRose-Refactoring-Kata.git ~/gilded-rose-refactoring-kata
 
+      cat >> ~/.profile <<- EOM
+      export NVM_DIR="\$HOME/.nvm"
+      [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"  # This loads nvm
+      [ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+      EOM
+
     path: /opt/user-scripts.sh
     permissions: '0755'
 
