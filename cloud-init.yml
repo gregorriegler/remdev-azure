@@ -122,6 +122,10 @@ write_files:
       xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Insert' -r -R
       xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>Delete' -r -R
       xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>l' -r -R
+      xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Alt>F7' -r -R
+      xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Shift><Alt>Left' -r -R
+      xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Shift><Alt>Right' -r -R
+      xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Shift><Alt>Up' -r -R
       setxkbmap -option caps:escape
 
       ## start X2Go Desktop Sharing
