@@ -162,6 +162,10 @@ write_files:
 
       # Dot files
       cp /opt/.bash_aliases ~/.bash_aliases
+      
+      # Git Config
+      git config --global user.name "mob"
+      git config --global user.email "mob@mob.at"
 
       # Kata Bootstraps
       git clone https://github.com/swkBerlin/kata-bootstraps ~/kata-bootstraps
