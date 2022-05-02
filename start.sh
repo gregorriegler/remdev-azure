@@ -4,11 +4,11 @@ REGION='westeurope' # has always the most and newest features
 # Alternative: 'Standard_D8s_v4' // General Purpose vCPUs:8 (Intel® Xeon® Platinum 8272CL) memory: 32GiB
 # Standard_D4d_v4
 # Standard_D4s_v3
-SIZE='Standard_D2s_v5'
+SIZE='Standard_D8s_v4'
 GROUPNAME='mob'
 USERNAME='mob'
 PASSWORD='mob'
-MYIP=$(curl ipinfo.io/ip)"/32"
+MYIP=$(curl ipinfo.io/ip)"/32" # if not given as a parameter it will take your outgoing IP/32
 
 while getopts r:s:g:u:p flag
 do
