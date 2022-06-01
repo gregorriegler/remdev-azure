@@ -13,11 +13,11 @@ do
           echo "subscriptionId: "$SUBSCRIPTION
         ;;
         u) USERNAME=${OPTARG}
-          echo "username: "$USERNAME
+          echo "username: "$USERNAME # still not supported in az cli
         ;;
         p) PASSWORD=${OPTARG}
         ;;
-        :) echo "Error: -${OPTARG} requires an argument."
+        :) echo "Error: -${OPTARG} requires an argument." # still not supported in az cli
           exit_abnormal
         ;;
         *)
