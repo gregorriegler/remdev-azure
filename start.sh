@@ -8,23 +8,23 @@ SIZE='Standard_D8s_v4'
 GROUPNAME='mob'
 USERNAME='mob'
 PASSWORD='mob'
-MYIP=$(curl -sq ipinfo.io/ip)"/32" # if not given as a parameter it will take your outgoing IP/32
+MYIP=$(curl -s ipinfo.io/ip)"/32" # if not given as a parameter it will take your outgoing IP/32
 
 usage() {                                 
-  echo "Usage: $0 [ -u USERNAME ] [ -p PASSWORD ] [ -r REGION ] [ -g RESOURCEGROUPNAME ] [ -i IPRANGE ] [ -s AZURE_VMSIZE ] -h "
+  echo "Usage: $0 [ -u USERNAME ] [ -p PASSWORD ] [ -r REGION ] [ -g RESOURCEGROUPNAME ] [ -i IPRANGE ] [ -s AZURE_VMSIZE ] [ -h ]"
 }
 
 usage_extended() {                                 
   echo "Usage: $0 "
   echo "[ -u USERNAME ]          # login name for provisioned VM; default: <mob>"
   echo "[ -p PASSWORD ]          # password for provisioned VM; default: <mob>"
-  echo "[ -r REGION ]            # Azure region where resource group and VM will be deployed; default: <mob>"
-  echo "[ -g RESOURCEGROUPNAME ] # Azure resourcegroup where VM will be deplyoed into; default: <mob>"
+  echo "[ -r REGION ]            # Azure region where resource group and VM will be deployed; default: <westeurope>"
+  echo "[ -g RESOURCEGROUPNAME ] # Azure resourcegroup where VM will be deployed into; default: <mob>"
   echo "[ -i IPRANGE ]           # IP Address (/32) or IP range in CIDR notation or multiple IP ranges separated by comma"
   echo "                           from where internet access should be allowed, also identifiers like Internet,VirtualNetwork, AzureLoadBalancer are allowed"
   echo "                           e.g.: -i 'A.B.C.D/32, A.B.C.D/24, Internet, A.B.C.D-E.F.G.H' "
   echo "[ -s AZURE_VMSIZE ]      # Azure VM size for deployment: e.g. Standard_D8s_v4, Standard_D4s_v3"
-  echo "[-h]                     # this help"
+  echo "[ -h ]                     # this help"
   echo ""
   echo ""
 }
