@@ -84,7 +84,6 @@ az network nsg rule create --name mobVM-ports \
                            --access allow \
                            --direction Inbound \
                            --protocol "*" \
-                           --source-address-prefixes $MYIP \
                            --destination-port-ranges 22 80 443 3000 5938 6568 7070
 
 az vm user update \

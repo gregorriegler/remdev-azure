@@ -70,13 +70,6 @@ write_files:
   - content: |
       #!/bin/bash
 
-      # Reset xfce4 settings
-      xfce4-panel --quit
-      pkill xfconfd
-      rm -rf ~/.config/xfce4/panel ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
-      xfce4-panel &
-      sleep 1
-
       launcher_plugins=()
       
       next_plugin_id () {
@@ -326,14 +319,5 @@ apt:
 
 # TODO
 # Extract all runuser to its own script
-# anydesk password ?
 # zsh + plugins
 # automatically destroy after 4 inactive hours
-#
-#
-# Tips:
-# Anydesk:
-# Show remote Cursor
-# Give up Mouse+Keyboard Control
-# Hetzner
-# test
