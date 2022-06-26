@@ -186,16 +186,14 @@ write_files:
     permissions: '0755'
 
 runcmd:
-  - [wget, "https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb", -O, /root/packages-microsoft-prod.deb]
-  - dpkg -i /root/packages-microsoft-prod.deb
-  - rm /root/packages-microsoft-prod.deb
+  - [wget, "https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb", -O, /tmp/packages-microsoft-prod.deb]
+  - dpkg -i /tmp/packages-microsoft-prod.deb
+  - rm /tmp/packages-microsoft-prod.deb
   - apt update
   - apt-get install dotnet-sdk-6.0 -y
   - usermod -aG docker mob
   - chmod 666 /var/run/docker.sock
-  - apt remove -y xfce4-screensaver
-  - apt remove -y xfce4-power-manager
-  - apt remove -y light-locker
+  - apt remove -y xfce4-screensaver xfce4-power-manager light-locker
   - sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
   - systemctl restart sshd
   - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
