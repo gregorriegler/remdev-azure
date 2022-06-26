@@ -99,10 +99,12 @@ echo "ssh ${USERNAME}@${ip}"
 
 # wait for cloud-init to be finished
 echo "please wait before connecting via X2Go."
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' -m 2 $ip:3000)" != "200" ]]; do 
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' -m 2 $ip:3000)" != 200* ]]; do
     sleep 2;
     echo -ne "."
 done
+echo -e " done.\n"
 
-echo " done."
+echo $(curl -s -m 2 $ip:3000)
+
 echo "${ip} ready to connect via X2Go."

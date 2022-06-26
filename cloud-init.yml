@@ -22,7 +22,10 @@ packages:
   - curl
   - gconf2
   - apt-transport-https
-    
+  - xserver-xorg-video-dummy
+  - libgtkglext1
+  - fzf
+
 snap:
   commands:
     - ['install', '--classic', '--channel=2021.1/stable', 'intellij-idea-ultimate']
@@ -66,7 +69,14 @@ write_files:
 
   - content: |
       #!/bin/bash
-      
+
+      # Reset xfce4 settings
+      xfce4-panel --quit
+      pkill xfconfd
+      rm -rf ~/.config/xfce4/panel ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+      xfce4-panel &
+      sleep 1
+
       launcher_plugins=()
       
       next_plugin_id () {
@@ -94,7 +104,6 @@ write_files:
       create_launcher_plugin "/usr/share/applications/org.gnome.meld.desktop"
       create_launcher_plugin "/var/lib/snapd/desktop/applications/postman_postman.desktop"
       create_launcher_plugin "/usr/share/applications/mob-timer.desktop"
-      create_launcher_plugin "/var/lib/flatpak/exports/share/applications/com.anydesk.Anydesk.desktop"
       
       plugins_string=""
       
@@ -135,9 +144,100 @@ write_files:
     permissions: '0755'
 
   - content: |
-      require('http').createServer(function (req, res) { res.end('UP'); }).listen(3000); 
+      #!/bin/bash
+
+      set_dm() {
+          DISPLAY_MANAGER="lightdm"
+          DISPLAY_MANAGER_SERVICE="/etc/systemd/system/display-manager.service"
+          DEFAULT_DISPLAY_MANAGER_FILE="/etc/X11/default-display-manager"
+
+          if [ -n "${1}" ]
+          then
+              DISPLAY_MANAGER="$1"
+          fi
+
+          DISPLAY_MANAGER_BIN="/usr/sbin/${DISPLAY_MANAGER}"
+          if [ ! -e "${DISPLAY_MANAGER_BIN}" ]
+          then
+              echo "${DISPLAY_MANAGER} seems not to be a valid display manager or is not installed."
+          exit 1
+          fi
+
+          echo "${DISPLAY_MANAGER_BIN}" > "${DEFAULT_DISPLAY_MANAGER_FILE}"
+          DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true dpkg-reconfigure "${DISPLAY_MANAGER}"
+          echo set shared/default-x-display-manager "${DISPLAY_MANAGER}" | debconf-communicate &> /dev/null
+
+          echo -n "systemd service is set to: "
+          readlink "${DISPLAY_MANAGER_SERVICE}"
+
+          echo -n "${DEFAULT_DISPLAY_MANAGER_FILE} is set to: "
+          cat "${DEFAULT_DISPLAY_MANAGER_FILE}"
+
+          echo -n "debconf is set to: "
+          echo get shared/default-x-display-manager | debconf-communicate
+      }
+
+      set_dm $1
+      touch /var/run/reboot-required
+    path: /opt/setdm.sh
+    permissions: '0755'
+
+  - content: |
+      Section "Monitor"
+      Identifier "Monitor0"
+      HorizSync 28.0-80.0
+      VertRefresh 48.0-75.0
+      Modeline "1920x1080_60.00" 172.80 1920 2040 2248 2576 1080 1081 1084 1118 -HSync +Vsync
+      EndSection
+
+      Section "Device"
+      Identifier "Card0"
+      Option "NoDDC" "true"
+      Option "IgnoreEDID" "true"
+      Driver "dummy"
+      VideoRam 256000
+      EndSection
+
+      Section "Screen"
+      DefaultDepth 24
+      Identifier "Screen0"
+      Device "Card0"
+      Monitor "Monitor0"
+          SubSection "Display"
+          Depth 24
+          Modes "1920x1080_60.00"
+          EndSubSection
+      EndSection
+    path: /etc/X11/xorg.conf
+    permissions: '644'
+
+  - content: |
+      let anydeskId = require('fs').readFileSync("/opt/anydesk_id").toString();
+      require('http').createServer(function (req, res) { res.end('AnydeskId: '+ anydeskId); }).listen(3000);
     path: /opt/up.js
     permissions: '0755'
+
+  - content: |
+      #!/bin/bash
+      runuser -l mob -c 'bash -ic "node /opt/up.js &"'
+    path: /opt/up.sh
+    permissions: '0755'
+
+  - content: |
+      [Unit]
+      After=network.service
+      [Service]
+      ExecStart=/opt/up.sh
+      [Install]
+      WantedBy=default.target
+    path: /etc/systemd/system/up.service
+
+  - content: |
+      [SeatDefaults]
+      autologin-user=mob
+      autologin-user-timeout=0
+      user-session=xfce
+    path: /etc/lightdm/lightdm.conf.d/lightdm.conf
 
   - content: |
       #!/bin/bash
@@ -186,6 +286,10 @@ write_files:
     permissions: '0755'
 
 runcmd:
+  - /opt/setdm.sh
+  - rm /usr/share/xsessions/ubuntu.desktop
+  - rm /usr/share/xsessions/xubuntu.desktop
+  - rm /usr/share/wayland-sessions/ubuntu-wayland.desktop
   - [wget, "https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb", -O, /tmp/packages-microsoft-prod.deb]
   - dpkg -i /tmp/packages-microsoft-prod.deb
   - rm /tmp/packages-microsoft-prod.deb
@@ -196,14 +300,22 @@ runcmd:
   - apt remove -y xfce4-screensaver xfce4-power-manager light-locker
   - sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
   - systemctl restart sshd
-  - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-  - flatpak install -y flathub com.anydesk.Anydesk
+  - wget https://download.anydesk.com/linux/anydesk_6.2.0-1_amd64.deb
+  - dpkg -i anydesk_6.2.0-1_amd64.deb
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - dpkg -i google-chrome-stable_current_amd64.deb
   - /opt/install-gh-cli.sh
   - printf "<!DOCTYPE NXKeystroke>\n<keystrokes></keystrokes>\n" > /etc/x2go/keystrokes.cfg
   - runuser -l mob -c 'bash -ic "/opt/user-scripts.sh"'
-  - runuser -l mob -c 'bash -ic "node /opt/up.js &"'
+  - echo ebcontcodingdojo | anydesk --set-password
+  - anydesk --get-id > /opt/anydesk_id
+  - chmod 755 /opt/anydesk_id
+  - systemctl daemon-reload
+  - systemctl enable /etc/systemd/system/up.service
+
+power_state:
+  message: Final Reboot
+  mode: reboot
 
 apt:
   sources:
