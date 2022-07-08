@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REGION='westeurope' # has always the most and newest features
+REGION='germanywestcentral' # has always the most and newest features
 # Alternative: 'Standard_D8s_v4' // General Purpose vCPUs:8 (Intel® Xeon® Platinum 8272CL) memory: 32GiB
 # Standard_D4d_v4
 # Standard_D4s_v3
