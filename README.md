@@ -11,7 +11,7 @@ You need an Azure account and have the azure cli installed.
 To start the remote desktop environment run:
 
 ````bash
-$ ./start.sh
+./start.sh
 ````
 
 Once the script is finished it will print the IP address of the spawned machine. You should be able to connect to it via ssh right away, as the azure cli automatically adds your ssh key. But it will take a couple more minutes and reboots for everything to install. 
@@ -20,7 +20,7 @@ In the end it will also print the Anydesk Id.
 You can follow the process in this log
 
 ```bash
-$ tail -f /var/log/cloud-init-output.log
+tail -f /var/log/cloud-init-output.log
 ```
 
 After it is finished you can use the [X2Go Client](https://wiki.x2go.org/doku.php/download:start) to connect to it.
@@ -28,7 +28,7 @@ After it is finished you can use the [X2Go Client](https://wiki.x2go.org/doku.ph
 To destroy the machine again run:
 
 ```bash
-$ ./stop.sh
+./stop.sh
 ```
 
 ## Use for mob programming
